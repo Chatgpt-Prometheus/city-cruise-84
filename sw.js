@@ -1,4 +1,4 @@
-const CACHE = 'city-cruise-v2';
+const CACHE = 'city-cruise-v3';
 const ARCHIVOS = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', e => {
   // cache:'reload' = bajar siempre del servidor, nunca de la caché HTTP del navegador
