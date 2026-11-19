@@ -1204,6 +1204,18 @@ addEventListener('pagehide', save);
 document.addEventListener('visibilitychange', () => { if (document.hidden) save(); });
 })();
 </script>
-<script>if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }</script>
+<script>
+// Service worker: al volver a la app busca versión nueva; si se instala una, recarga una vez para mostrarla.
+if ('serviceWorker' in navigator) {
+  const habiaVersion = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.register('sw.js').then(reg => {
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) reg.update().catch(() => {}); });
+  });
+  let recargando = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (habiaVersion && !recargando) { recargando = true; location.reload(); }
+  });
+}
+</script>
 </body>
 </html>
